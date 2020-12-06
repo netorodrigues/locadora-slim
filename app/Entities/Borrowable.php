@@ -52,7 +52,7 @@ final class Borrowable implements EntityInterface
         $this->available = $available;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return array(
             'id' => $this->uuid->getValue(),
