@@ -2,4 +2,6 @@
 
 declare (strict_types = 1);
 
-$app->get('/', 'App\Controllers\HelloController:get');
+use App\Controllers\HelloController;
+
+$app->get('/', HelloController::class . ':get');

@@ -7,6 +7,7 @@ use Slim\Factory\AppFactory;
 $rootDir = __DIR__ . '/../';
 
 $dotenv = Dotenv\Dotenv::createImmutable($rootDir);
+
 $envFile = $rootDir . '.env';
 if (file_exists($envFile)) {
     $dotenv->load();
