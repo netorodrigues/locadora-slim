@@ -4,8 +4,8 @@ namespace App\Entities\ValueObjects;
 
 class ItemType
 {
-    private $possibleValues = ['cd', 'dvd', 'book'];
-    protected $value;
+    public static $possibleValues = ['cd', 'dvd', 'book'];
+    private $value;
 
     public function __construct(string $value)
     {
@@ -23,6 +23,6 @@ class ItemType
 
     public static function isValid(string $type): bool
     {
-        return in_array($value, self::possibleValues);
+        return in_array($type, self::$possibleValues);
     }
 }

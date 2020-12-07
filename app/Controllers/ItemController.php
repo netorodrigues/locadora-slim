@@ -6,7 +6,7 @@ use App\Factories\ItemFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class ItemController
+final class ItemController extends JSONController
 {
 
     private $itemFactory;
@@ -16,16 +16,15 @@ final class ItemController
         $this->itemFactory = $factory;
     }
 
-    public function get(Request $request, Response $response)
+    public function get(Request $request, Response $response): Response
     {
         $response->getBody()->write("Hello world!");
         return $response;
     }
 
-    public function post(Request $request, Response $response)
+    public function post(Request $request, Response $response): Response
     {
         $item = $this->itemFactory->fromRequest($request);
-        $response->getBody()->write($item);
-        return $response;
+        return $this->sendJson($response, $item->toArray(), 200);
     }
 }

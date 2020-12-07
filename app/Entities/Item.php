@@ -2,24 +2,24 @@
 
 namespace App\Entities;
 
+use App\Entities\ValueObjects\Contracts\UniqueIDInterface;
 use App\Entities\ValueObjects\ItemType;
-use App\Entities\ValueObjects\Uuid;
 
 final class Item implements EntityInterface
 {
-    private $uuid;
+    private $id;
     private $type;
     private $name;
     private $available;
 
-    public function getUuid(): Uuid
+    public function getId(): UniqueIDInterface
     {
-        return $this->uuid;
+        return $this->id;
     }
 
-    public function setUuid(Uuid $uuid)
+    public function setId(UniqueIDInterface $id)
     {
-        $this->uuid = $uuid;
+        $this->id = $id;
     }
 
     public function getType(): ItemType
@@ -47,7 +47,7 @@ final class Item implements EntityInterface
         return $this->available;
     }
 
-    private function setAvailable(bool $available)
+    public function setAvailable(bool $available)
     {
         $this->available = $available;
     }
@@ -55,7 +55,7 @@ final class Item implements EntityInterface
     public function toArray(): array
     {
         return array(
-            'id' => $this->uuid->getValue(),
+            'id' => $this->id->getValue(),
             'type' => $this->type->getValue(),
             'name' => $this->getName(),
             'available' => $this->getAvailable(),
