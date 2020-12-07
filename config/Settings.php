@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-return [
+$databaseSettings = [
     'settings' => [
         'db' => [
             'hostname' => $_SERVER['DB_HOST'],
@@ -13,3 +13,5 @@ return [
         ],
     ],
 ];
+
+return $databaseSettings;

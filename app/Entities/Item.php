@@ -2,10 +2,10 @@
 
 namespace App\Entities;
 
-use App\Entities\ValueObjects\BorrowableType;
+use App\Entities\ValueObjects\ItemType;
 use App\Entities\ValueObjects\Uuid;
 
-final class Borrowable implements EntityInterface
+final class Item implements EntityInterface
 {
     private $uuid;
     private $type;
@@ -22,12 +22,12 @@ final class Borrowable implements EntityInterface
         $this->uuid = $uuid;
     }
 
-    public function getType(): BorrowableType
+    public function getType(): ItemType
     {
         return $this->type;
     }
 
-    public function setType(BorrowableType $type)
+    public function setType(ItemType $type)
     {
         $this->type = $type;
     }

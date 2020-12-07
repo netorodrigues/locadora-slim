@@ -1,6 +1,8 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
+
+use App\Middlewares\JSONBodyParserMiddleware;
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 
@@ -23,6 +25,8 @@ $container = $containerBuilder->build();
 
 AppFactory::setContainer($container);
 $app = AppFactory::create();
+
+$app->add(new JSONBodyParserMiddleware());
 
 require __DIR__ . '/Connection.php';
 require __DIR__ . '/Routes.php';

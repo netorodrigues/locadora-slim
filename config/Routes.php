@@ -2,6 +2,7 @@
 
 declare (strict_types = 1);
 
-use App\Controllers\HelloController;
+use App\Controllers\ItemController;
 
-$app->get('/', HelloController::class . ':get');
+$app->get('/api/items', ItemController::class . ':get');
+$app->post('/api/items', ItemController::class . ':post');

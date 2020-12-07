@@ -2,7 +2,7 @@
 
 namespace App\Entities\ValueObjects;
 
-class BorrowableType
+class ItemType
 {
     private $possibleValues = ['cd', 'dvd', 'book'];
     protected $value;
