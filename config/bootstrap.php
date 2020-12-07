@@ -3,8 +3,8 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Middlewares\JSONBodyParserMiddleware;
+use DI\Bridge\Slim\Bridge as SlimApp;
 use DI\ContainerBuilder;
-use Slim\Factory\AppFactory;
 
 $rootDir = __DIR__ . '/../';
 
@@ -18,13 +18,14 @@ if (file_exists($envFile)) {
 $dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT']);
 
 $settings = require __DIR__ . '/Settings.php';
+$dependencies = require __DIR__ . '/Dependencies.php';
 
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions($settings);
+$containerBuilder->addDefinitions($dependencies);
 $container = $containerBuilder->build();
 
-AppFactory::setContainer($container);
-$app = AppFactory::create();
+$app = SlimApp::create($container);
 
 $app->add(new JSONBodyParserMiddleware());
 

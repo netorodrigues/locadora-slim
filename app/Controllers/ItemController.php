@@ -2,21 +2,30 @@
 
 namespace App\Controllers;
 
+use App\Factories\ItemFactoryInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class ItemController extends AbstractController
+final class ItemController
 {
-    public function get(Request $request, Response $response, $args)
+
+    private $itemFactory;
+
+    public function __construct(ItemFactoryInterface $factory)
+    {
+        $this->itemFactory = $factory;
+    }
+
+    public function get(Request $request, Response $response)
     {
         $response->getBody()->write("Hello world!");
         return $response;
     }
 
-    public function post(Request $request, Response $response, $args)
+    public function post(Request $request, Response $response)
     {
-        var_dump($request->getParsedBody());
-        $response->getBody()->write("Hello post world!");
+        $item = $this->itemFactory->fromRequest($request);
+        $response->getBody()->write($item);
         return $response;
     }
 }
