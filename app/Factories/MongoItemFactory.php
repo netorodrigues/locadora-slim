@@ -4,7 +4,7 @@ namespace App\Factories;
 
 use App\Entities\Item;
 use App\Entities\ValueObjects\ItemType;
-use App\Entities\ValueObjects\MongoObjectID;
+use App\Factories\Contracts\ItemFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class MongoItemFactory implements ItemFactoryInterface
@@ -15,7 +15,6 @@ class MongoItemFactory implements ItemFactoryInterface
         $requestBody = $request->getParsedBody();
 
         $item = new Item;
-        $item->setId(new MongoObjectID(null));
         $item->setType(new ItemType($requestBody['type']));
         $item->setName($requestBody['name']);
         $item->setAvailable(true);

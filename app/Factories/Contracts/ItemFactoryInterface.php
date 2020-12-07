@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Factories;
+namespace App\Factories\Contracts;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 
