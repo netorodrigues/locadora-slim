@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Factories\Contracts\ItemFactory;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
+use App\Services\Item\Contracts\DeleteItemServiceInterface;
 use App\Services\Item\Contracts\EditItemServiceInterface;
 use App\Services\Item\Contracts\GetItemsServiceInterface;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -15,11 +16,13 @@ final class ItemController extends JSONController
     private $itemFactory;
     private $createItemService;
     private $getItemService;
+    private $deleteItemService;
 
     public function __construct(
         CreateItemServiceInterface $createItemService,
         GetItemsServiceInterface $getItemService,
         EditItemServiceInterface $editItemService,
+        DeleteItemServiceInterface $deleteItemService,
         ItemFactory $factory
     ) {
         $this->itemFactory = $factory;
@@ -27,6 +30,7 @@ final class ItemController extends JSONController
         $this->createItemService = $createItemService;
         $this->getItemService = $getItemService;
         $this->editItemService = $editItemService;
+        $this->deleteItemService = $deleteItemService;
     }
 
     public function get(Request $request, Response $response): Response
@@ -50,6 +54,7 @@ final class ItemController extends JSONController
 
     public function delete(string $itemId, Request $request, Response $response): Response
     {
-        return $this->sendJson($response, ['id' => $itemId], 200);
+        $wasDeleted = $this->deleteItemService->execute($itemId);
+        return $this->sendJson($response, ['deleted' => $wasDeleted], 200);
     }
 }

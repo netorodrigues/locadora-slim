@@ -65,7 +65,13 @@ final class MongoItemRepository implements ItemRepository
 
     public function delete(string $itemId): bool
     {
-        return false;
+        $bulk = new MongoDBBulkWrite;
+
+        $bulk->delete(['_id' => $itemId]);
+
+        $bulkWriteResult = $this->mongoManager->executeBulkWrite($this->collectionIdentifier, $bulk);
+
+        return !empty($bulkWriteResult->getDeletedCount());
     }
 
     public function getById(string $itemId): array

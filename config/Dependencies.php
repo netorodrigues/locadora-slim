@@ -7,9 +7,11 @@ use App\Factories\MongoItemFactory;
 use App\Repositories\Contracts\ItemRepository;
 use App\Repositories\MongoDB\MongoItemRepository;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
+use App\Services\Item\Contracts\DeleteItemServiceInterface;
 use App\Services\Item\Contracts\EditItemServiceInterface;
 use App\Services\Item\Contracts\GetItemsServiceInterface;
 use App\Services\Item\CreateItemService;
+use App\Services\Item\DeleteItemService;
 use App\Services\Item\EditItemService;
 use App\Services\Item\GetItemsService;
 use function DI\autowire as useInstance;
@@ -47,6 +49,7 @@ $services = [
     CreateItemServiceInterface::class => useInstance(CreateItemService::class),
     GetItemsServiceInterface::class => useInstance(GetItemsService::class),
     EditItemServiceInterface::class => useInstance(EditItemService::class),
+    DeleteItemServiceInterface::class => useInstance(DeleteItemService::class),
 ];
 
 return array_merge(
