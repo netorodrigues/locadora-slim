@@ -2,11 +2,11 @@
 
 namespace App\Entities;
 
-use App\Entities\Contracts\EntityInterface;
+use App\Entities\Contracts\Entity;
 use App\Entities\ValueObjects\Contracts\UniqueIDInterface;
 use App\Entities\ValueObjects\ItemType;
 
-final class Item implements EntityInterface
+final class Item implements Entity
 {
     private $id;
     private $type;

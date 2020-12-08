@@ -21,28 +21,16 @@ $settings = require __DIR__ . '/Settings.php';
 $dependencies = require __DIR__ . '/Dependencies.php';
 
 $containerBuilder = new ContainerBuilder();
+
 $containerBuilder->addDefinitions($settings);
 $containerBuilder->addDefinitions($dependencies);
+
 $container = $containerBuilder->build();
 
 $app = SlimApp::create($container);
 
 $app->add(new JSONBodyParserMiddleware());
 
-require __DIR__ . '/Connection.php';
 require __DIR__ . '/Routes.php';
-
-/* MONGODB SIMPLE INSERT EXAMPLE
-
-$doc = ['id' => uniqid(''), 'name' => 'Test Insert', 'price' => 26700];
-
-$bulk = new \MongoDB\Driver\BulkWrite;
-$bulk->insert($doc);
-$bulk->update(['name' => 'Audi'], ['$set' => ['price' => 52000]]);
-$bulk->delete(['name' => 'Hummer']);
-
-$container->get('mongoManager')->executeBulkWrite('testdb.cars', $bulk);
-
- */
 
 return $app;
