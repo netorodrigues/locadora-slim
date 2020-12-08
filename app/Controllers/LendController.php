@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Factories\Contracts\LendFactory;
 use App\Services\Lend\Contracts\CreateLendServiceInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -10,10 +11,14 @@ final class LendController extends JSONController
 {
 
     private $createLendService;
+    private $lendFactory;
     public function __construct(
-        CreateLendServiceInterface $createLendService
+        CreateLendServiceInterface $createLendService,
+        LendFactory $lendFactory
+
     ) {
         $this->createLendService = $createLendService;
+        $this->lendFactory = $lendFactory;
     }
 
     public function get(Request $request, Response $response): Response
