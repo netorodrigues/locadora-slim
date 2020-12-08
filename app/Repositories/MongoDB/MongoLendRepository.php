@@ -7,7 +7,7 @@ use App\Repositories\Contracts\LendRepository;
 use \MongoDB\Driver\Manager as MongoDBManager;
 use \MongoDB\Driver\Query as MongoDBQuery;
 
-final class MongoItemRepository implements LendRepository
+final class MongoLendRepository implements LendRepository
 {
     private $mongoManager;
 

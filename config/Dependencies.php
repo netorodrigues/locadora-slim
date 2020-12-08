@@ -16,6 +16,8 @@ use App\Services\Item\CreateItemService;
 use App\Services\Item\DeleteItemService;
 use App\Services\Item\EditItemService;
 use App\Services\Item\GetItemsService;
+use App\Services\Lend\Contracts\CreateLendServiceInterface;
+use App\Services\Lend\CreateLendService;
 use function DI\autowire as useInstance;
 use Psr\Container\ContainerInterface;
 use \MongoDB\Driver\Manager as MongoDBManager;
@@ -48,16 +50,21 @@ $repositories = [
     LendRepository::class => useInstance(MongoLendRepository::class),
 ];
 
-$services = [
+$itemServices = [
     CreateItemServiceInterface::class => useInstance(CreateItemService::class),
     GetItemsServiceInterface::class => useInstance(GetItemsService::class),
     EditItemServiceInterface::class => useInstance(EditItemService::class),
     DeleteItemServiceInterface::class => useInstance(DeleteItemService::class),
 ];
 
+$lendServices = [
+    CreateLendServiceInterface::class => useInstance(CreateLendService::class),
+];
+
 return array_merge(
     $connection,
     $factories,
     $repositories,
-    $services
+    $itemServices,
+    $lendServices
 );
