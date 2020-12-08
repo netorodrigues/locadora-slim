@@ -5,7 +5,9 @@ declare (strict_types = 1);
 use App\Factories\Contracts\ItemFactory;
 use App\Factories\MongoItemFactory;
 use App\Repositories\Contracts\ItemRepository;
+use App\Repositories\Contracts\LendRepository;
 use App\Repositories\MongoDB\MongoItemRepository;
+use App\Repositories\MongoDB\MongoLendRepository;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
 use App\Services\Item\Contracts\DeleteItemServiceInterface;
 use App\Services\Item\Contracts\EditItemServiceInterface;
@@ -43,6 +45,7 @@ $factories = [
 
 $repositories = [
     ItemRepository::class => useInstance(MongoItemRepository::class),
+    LendRepository::class => useInstance(MongoLendRepository::class),
 ];
 
 $services = [
