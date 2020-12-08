@@ -2,15 +2,23 @@
 
 namespace App\Factories;
 
-use App\Entities\Item;
 use App\Entities\Lend;
 use App\Entities\ValueObjects\Email;
-use App\Entities\ValueObjects\MongoObjectID;
+use App\Factories\Contracts\ItemFactory;
 use App\Factories\Contracts\LendFactory;
+use App\Repositories\Contracts\ItemRepository;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class MongoLendFactory implements LendFactory
 {
+
+    private $itemFactory;
+    private $itemRepository;
+    public function __construct(ItemFactory $itemFactory, ItemRepository $itemRepository)
+    {
+        $this->itemFactory = $itemFactory;
+        $this->itemRepository = $itemRepository;
+    }
 
     public function fromRequest(Request $request): Lend
     {
@@ -20,8 +28,11 @@ class MongoLendFactory implements LendFactory
         $lend->setResponsibleEmail(new Email($requestBody['responsibleEmail']));
         $lend->setResponsibleName($requestBody['responsibleName']);
 
-        $item = new Item;
-        $item->setId(new MongoObjectID($requestBody['itemId']));
+        $itemData = $this->itemRepository->getById(
+            $requestBody['itemId']
+        );
+
+        $item = $this->itemFactory->fromArray($itemData);
         $lend->setItem($item);
 
         return $lend;

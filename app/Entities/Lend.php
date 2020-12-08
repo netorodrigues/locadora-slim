@@ -45,7 +45,7 @@ final class Lend implements Entity
 
     public function getResponsibleEmail(): EmailInterface
     {
-        return $this->responsibleName;
+        return $this->responsibleEmail;
     }
 
     public function setResponsibleEmail(EmailInterface $email)
@@ -59,9 +59,9 @@ final class Lend implements Entity
             'responsibleName' => $this->getResponsibleName(),
             'responsibleEmail' => $this->getResponsibleEmail()->getValue(),
             'item' => array(
-                'id' => $this->getItem()->getId(),
+                'id' => $this->getItem()->getId()->getValue(),
                 'name' => $this->getItem()->getName(),
-                'name' => $this->getItem()->getType()->getValue(),
+                'type' => $this->getItem()->getType()->getValue(),
             ),
         );
 

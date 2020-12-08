@@ -28,7 +28,9 @@ final class LendController extends JSONController
 
     public function post(Request $request, Response $response): Response
     {
-        return $this->sendJson($response, ['lend' => 'post route!'], 200);
+        $lend = $this->lendFactory->fromRequest($request);
+        $createdLend = $this->createLendService->execute($lend);
+        return $this->sendJson($response, $createdLend->toArray(), 200);
     }
 
     public function delete(string $itemId, Request $request, Response $response): Response
