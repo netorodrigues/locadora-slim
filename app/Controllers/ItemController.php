@@ -37,4 +37,14 @@ final class ItemController extends JSONController
         $createdItem = $this->createItemService->execute($baseItem);
         return $this->sendJson($response, $createdItem->toArray(), 200);
     }
+
+    public function put(string $itemId, Request $request, Response $response): Response
+    {
+        return $this->sendJson($response, ['id' => $itemId], 200);
+    }
+
+    public function delete(string $itemId, Request $request, Response $response): Response
+    {
+        return $this->sendJson($response, ['id' => $itemId], 200);
+    }
 }
