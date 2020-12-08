@@ -19,7 +19,9 @@ use App\Services\Item\DeleteItemService;
 use App\Services\Item\EditItemService;
 use App\Services\Item\GetItemsService;
 use App\Services\Lend\Contracts\CreateLendServiceInterface;
+use App\Services\Lend\Contracts\GetLendsServiceInterface;
 use App\Services\Lend\CreateLendService;
+use App\Services\Lend\GetLendsService;
 use function DI\autowire as useInstance;
 use Psr\Container\ContainerInterface;
 use \MongoDB\Driver\Manager as MongoDBManager;
@@ -62,6 +64,7 @@ $itemServices = [
 
 $lendServices = [
     CreateLendServiceInterface::class => useInstance(CreateLendService::class),
+    GetLendsServiceInterface::class => useInstance(GetLendsService::class),
 ];
 
 return array_merge(
