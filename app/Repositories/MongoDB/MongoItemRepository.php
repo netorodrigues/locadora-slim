@@ -7,6 +7,7 @@ use App\Entities\ValueObjects\MongoObjectID as ObjectId;
 use App\Repositories\Contracts\ItemRepository;
 use \MongoDB\Driver\BulkWrite as MongoDBBulkWrite;
 use \MongoDB\Driver\Manager as MongoDBManager;
+use \MongoDB\Driver\Query as MongoDBQuery;
 
 final class MongoItemRepository implements ItemRepository
 {
@@ -27,7 +28,11 @@ final class MongoItemRepository implements ItemRepository
 
     public function get(): array
     {
-        return [];
+        $query = new MongoDBQuery([]);
+
+        $rows = $this->mongoManager->executeQuery($this->collectionIdentifier, $query);
+
+        return $rows->toArray();
     }
 
     public function create(Item $item): Item

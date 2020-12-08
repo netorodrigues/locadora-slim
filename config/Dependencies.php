@@ -7,7 +7,9 @@ use App\Factories\MongoItemFactory;
 use App\Repositories\Contracts\ItemRepository;
 use App\Repositories\MongoDB\MongoItemRepository;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
+use App\Services\Item\Contracts\GetItemsServiceInterface;
 use App\Services\Item\CreateItemService;
+use App\Services\Item\GetItemsService;
 use function DI\autowire as useInstance;
 use Psr\Container\ContainerInterface;
 use \MongoDB\Driver\Manager as MongoDBManager;
@@ -40,6 +42,7 @@ $repositories = [
 
 $services = [
     CreateItemServiceInterface::class => useInstance(CreateItemService::class),
+    GetItemsServiceInterface::class => useInstance(GetItemsService::class),
 ];
 
 return array_merge(
