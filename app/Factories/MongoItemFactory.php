@@ -28,10 +28,10 @@ class MongoItemFactory implements ItemFactory
     {
         $item = new Item;
 
-        $item->setId(new MongoObjectID($array['_id']));
-        $item->setType(new ItemType($array['type']));
-        $item->setName($array['name']);
-        $item->setAvailable($array['available']);
+        $item->setId(new MongoObjectID($data['_id']));
+        $item->setType(new ItemType($data['type']));
+        $item->setName($data['name']);
+        $item->setAvailable($data['available']);
 
         return $item;
     }

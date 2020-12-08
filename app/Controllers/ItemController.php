@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Factories\Contracts\ItemFactory;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
+use App\Services\Item\Contracts\EditItemServiceInterface;
 use App\Services\Item\Contracts\GetItemsServiceInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -18,11 +19,14 @@ final class ItemController extends JSONController
     public function __construct(
         CreateItemServiceInterface $createItemService,
         GetItemsServiceInterface $getItemService,
+        EditItemServiceInterface $editItemService,
         ItemFactory $factory
     ) {
         $this->itemFactory = $factory;
+
         $this->createItemService = $createItemService;
         $this->getItemService = $getItemService;
+        $this->editItemService = $editItemService;
     }
 
     public function get(Request $request, Response $response): Response
@@ -40,7 +44,8 @@ final class ItemController extends JSONController
 
     public function put(string $itemId, Request $request, Response $response): Response
     {
-        return $this->sendJson($response, ['id' => $itemId], 200);
+        $item = $this->editItemService->execute($itemId, $request->getParsedBody());
+        return $this->sendJson($response, $item->toArray(), 200);
     }
 
     public function delete(string $itemId, Request $request, Response $response): Response

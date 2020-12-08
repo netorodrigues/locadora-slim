@@ -45,21 +45,36 @@ final class MongoItemRepository implements ItemRepository
 
         $bulk->insert($document);
 
-        $result = $this->mongoManager->executeBulkWrite($this->collectionIdentifier, $bulk);
+        $this->mongoManager->executeBulkWrite($this->collectionIdentifier, $bulk);
 
-        $upsertedIds = $result->getUpsertedIds();
         $item->setId($objectId);
 
         return $item;
     }
 
-    public function edit(string $itemId): Item
+    public function update(string $itemId, array $dataArray): array
     {
-        return new Item;
+        $bulk = new MongoDBBulkWrite;
+
+        $bulk->update(['_id' => $itemId], ['$set' => $dataArray]);
+
+        $this->mongoManager->executeBulkWrite($this->collectionIdentifier, $bulk);
+
+        return $this->getById($itemId);
     }
 
     public function delete(string $itemId): bool
     {
         return false;
+    }
+
+    public function getById(string $itemId): array
+    {
+        $filter = ['_id' => $itemId];
+        $query = new MongoDBQuery($filter);
+
+        $itemData = $this->mongoManager->executeQuery($this->collectionIdentifier, $query);
+
+        return (array) current($itemData->toArray());
     }
 }

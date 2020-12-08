@@ -7,8 +7,10 @@ use App\Factories\MongoItemFactory;
 use App\Repositories\Contracts\ItemRepository;
 use App\Repositories\MongoDB\MongoItemRepository;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
+use App\Services\Item\Contracts\EditItemServiceInterface;
 use App\Services\Item\Contracts\GetItemsServiceInterface;
 use App\Services\Item\CreateItemService;
+use App\Services\Item\EditItemService;
 use App\Services\Item\GetItemsService;
 use function DI\autowire as useInstance;
 use Psr\Container\ContainerInterface;
@@ -18,6 +20,7 @@ $connection = [
     MongoDBManager::class => static function (ContainerInterface $container): MongoDBManager {
 
         $databaseConfigurations = $container->get('settings')['db'];
+
         $connectionString = sprintf(
             "mongodb://%s:%s@%s:%s",
             $databaseConfigurations['user'],
@@ -26,9 +29,9 @@ $connection = [
             $databaseConfigurations['port']
         );
 
-        $mongo = new MongoDBManager($connectionString);
+        $mongoManager = new MongoDBManager($connectionString);
 
-        return $mongo;
+        return $mongoManager;
     },
 ];
 
@@ -43,6 +46,7 @@ $repositories = [
 $services = [
     CreateItemServiceInterface::class => useInstance(CreateItemService::class),
     GetItemsServiceInterface::class => useInstance(GetItemsService::class),
+    EditItemServiceInterface::class => useInstance(EditItemService::class),
 ];
 
 return array_merge(

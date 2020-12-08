@@ -3,13 +3,16 @@
 namespace App\Services\Item;
 
 use App\Entities\Item;
+use App\Factories\Contracts\ItemFactory;
 use App\Repositories\Contracts\ItemRepository;
 
 abstract class BaseItemService
 {
     protected $itemRepository;
-    public function __construct(ItemRepository $repository)
+    protected $itemFactory;
+    public function __construct(ItemRepository $repository, ItemFactory $factory)
     {
         $this->itemRepository = $repository;
+        $this->itemFactory = $factory;
     }
 }

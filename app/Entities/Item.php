@@ -8,6 +8,7 @@ use App\Entities\ValueObjects\ItemType;
 
 final class Item implements Entity
 {
+    public static $editableColumns = ['type', 'name', 'available'];
     private $id;
     private $type;
     private $name;
