@@ -31,7 +31,14 @@ final class MongoLendRepository implements LendRepository
 
         $rows = $this->mongoManager->executeQuery($this->collectionIdentifier, $query);
 
-        return $rows->toArray();
+        $rowsArray = $rows->toArray();
+
+        foreach ($rowsArray as &$row) {
+            $row->id = $row->_id;
+            unset($row->_id);
+        }
+
+        return $rowsArray;
     }
 
     public function getById(string $lendId): array
@@ -40,8 +47,10 @@ final class MongoLendRepository implements LendRepository
         $query = new MongoDBQuery($filter);
 
         $lendData = $this->mongoManager->executeQuery($this->collectionIdentifier, $query);
+        $lendArray = (array) current($lendData->toArray());
 
-        return (array) current($lendData->toArray());
+        $lendArray['id'] = $lendArray['_id'];
+        return $lendArray;
     }
 
     public function create(array $lend): array

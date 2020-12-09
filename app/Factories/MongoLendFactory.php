@@ -43,9 +43,10 @@ class MongoLendFactory implements LendFactory
     public function fromArray(array $lendData): Lend
     {
         $lend = new Lend;
+
         $lend->setResponsibleEmail(new Email($lendData['responsibleEmail']));
         $lend->setResponsibleName($lendData['responsibleName']);
-        $lend->setId(new ObjectId($lendData['_id']));
+        $lend->setId(new ObjectId($lendData['id']));
         $itemData = $this->itemRepository->getById(
             $lendData['itemId']
         );
