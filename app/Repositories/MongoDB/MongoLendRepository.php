@@ -50,8 +50,14 @@ final class MongoLendRepository implements LendRepository
         return $lend;
     }
 
-    public function delete(string $lendId): bool
+    public function delete(string $itemId): bool
     {
-        return false;
+        $bulk = new MongoDBBulkWrite;
+
+        $bulk->delete(['_id' => $itemId]);
+
+        $bulkWriteResult = $this->mongoManager->executeBulkWrite($this->collectionIdentifier, $bulk);
+
+        return !empty($bulkWriteResult->getDeletedCount());
     }
 }

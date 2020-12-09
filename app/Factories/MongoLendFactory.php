@@ -4,6 +4,7 @@ namespace App\Factories;
 
 use App\Entities\Lend;
 use App\Entities\ValueObjects\Email;
+use App\Entities\ValueObjects\MongoObjectID as ObjectId;
 use App\Factories\Contracts\ItemFactory;
 use App\Factories\Contracts\LendFactory;
 use App\Repositories\Contracts\ItemRepository;
@@ -44,7 +45,7 @@ class MongoLendFactory implements LendFactory
         $lend = new Lend;
         $lend->setResponsibleEmail(new Email($lendData['responsibleEmail']));
         $lend->setResponsibleName($lendData['responsibleName']);
-
+        $lend->setId(new ObjectId($lendData['_id']));
         $itemData = $this->itemRepository->getById(
             $lendData['itemId']
         );
