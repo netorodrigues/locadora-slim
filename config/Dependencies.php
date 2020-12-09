@@ -8,6 +8,8 @@ use App\Factories\MongoItemFactory;
 use App\Factories\MongoLendFactory;
 use App\Repositories\Contracts\ItemRepository;
 use App\Repositories\Contracts\LendRepository;
+use App\Repositories\InMemoryItemRepository;
+use App\Repositories\InMemoryLendRepository;
 use App\Repositories\MongoDB\MongoItemRepository;
 use App\Repositories\MongoDB\MongoLendRepository;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
@@ -27,6 +29,8 @@ use App\Services\Lend\GetLendsService;
 use function DI\autowire as useInstance;
 use Psr\Container\ContainerInterface;
 use \MongoDB\Driver\Manager as MongoDBManager;
+
+$environment = getenv('ENV_TYPE');
 
 $connection = [
     MongoDBManager::class => static function (ContainerInterface $container): MongoDBManager {
@@ -57,6 +61,11 @@ $repositories = [
     LendRepository::class => useInstance(MongoLendRepository::class),
 ];
 
+$testRepositories = [
+    ItemRepository::class => useInstance(InMemoryItemRepository::class),
+    LendRepository::class => useInstance(InMemoryLendRepository::class),
+];
+
 $itemServices = [
     CreateItemServiceInterface::class => useInstance(CreateItemService::class),
     GetItemsServiceInterface::class => useInstance(GetItemsService::class),
@@ -73,7 +82,7 @@ $lendServices = [
 return array_merge(
     $connection,
     $factories,
-    $repositories,
+    $environment === 'TEST' ? $testRepositories : $repositories,
     $itemServices,
     $lendServices
 );
