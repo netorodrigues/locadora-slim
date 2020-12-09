@@ -38,4 +38,21 @@ class MongoLendFactory implements LendFactory
         return $lend;
 
     }
+
+    public function fromArray(array $lendData): Lend
+    {
+        $lend = new Lend;
+        $lend->setResponsibleEmail(new Email($lendData['responsibleEmail']));
+        $lend->setResponsibleName($lendData['responsibleName']);
+
+        $itemData = $this->itemRepository->getById(
+            $lendData['itemId']
+        );
+
+        $item = $this->itemFactory->fromArray($itemData);
+        $lend->setItem($item);
+
+        return $lend;
+
+    }
 }

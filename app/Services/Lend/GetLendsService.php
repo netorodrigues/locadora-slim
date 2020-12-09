@@ -9,6 +9,14 @@ final class GetLendsService extends BaseLendService implements GetLendsServiceIn
 {
     public function execute(): array
     {
-        return [];
+        $lends = [];
+        $lendRows = $this->lendRepository->get();
+
+        foreach ($lendRows as $lendRow) {
+            $lend = $this->lendFactory->fromArray((array) $lendRow);
+            $lends[] = $lend->toArray();
+        }
+
+        return $lends;
     }
 }
