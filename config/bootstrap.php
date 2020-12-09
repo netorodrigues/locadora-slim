@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\Handlers\HttpErrorHandler;
 use App\Middlewares\JSONBodyParserMiddleware;
 use DI\Bridge\Slim\Bridge as SlimApp;
 use DI\ContainerBuilder;
@@ -28,6 +29,12 @@ $containerBuilder->addDefinitions($dependencies);
 $container = $containerBuilder->build();
 
 $app = SlimApp::create($container);
+
+$callableResolver = $app->getCallableResolver();
+$responseFactory = $app->getResponseFactory();
+$errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
+$errorMiddleware = $app->addErrorMiddleware(false, false, false);
+$errorMiddleware->setDefaultErrorHandler($errorHandler);
 
 $app->add(new JSONBodyParserMiddleware());
 
