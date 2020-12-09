@@ -26,13 +26,41 @@ final class MongoItemRepository implements ItemRepository
         $this->mongoManager = $manager;
     }
 
-    public function get(): array
+    public function getAvailable(): array
     {
-        $query = new MongoDBQuery([]);
+        $query = new MongoDBQuery(['available' => true]);
 
         $rows = $this->mongoManager->executeQuery($this->collectionIdentifier, $query);
 
         return $rows->toArray();
+    }
+
+    public function setAsAvailable(string $itemId): bool
+    {
+        $bulk = new MongoDBBulkWrite;
+
+        $dataArray = ['available' => true];
+
+        $bulk->update(['_id' => $itemId], ['$set' => $dataArray]);
+
+        $bulkWriteResult = $this->mongoManager
+            ->executeBulkWrite($this->collectionIdentifier, $bulk);
+
+        return !empty($bulkWriteResult->getMatchedCount());
+    }
+
+    public function setAsUnavailable(string $itemId): bool
+    {
+        $bulk = new MongoDBBulkWrite;
+
+        $dataArray = ['available' => false];
+
+        $bulk->update(['_id' => $itemId], ['$set' => $dataArray]);
+
+        $bulkWriteResult = $this->mongoManager
+            ->executeBulkWrite($this->collectionIdentifier, $bulk);
+
+        return !empty($bulkWriteResult->getMatchedCount());
     }
 
     public function create(Item $item): Item

@@ -9,7 +9,7 @@ final class GetItemsService extends BaseItemService implements GetItemsServiceIn
 {
     public function execute(): array
     {
-        $rows = $this->itemRepository->get();
+        $rows = $this->itemRepository->getAvailable();
 
         foreach ($rows as &$row) {
             $row->id = $row->_id;

@@ -34,6 +34,16 @@ final class MongoLendRepository implements LendRepository
         return $rows->toArray();
     }
 
+    public function getById(string $lendId): array
+    {
+        $filter = ['_id' => $lendId];
+        $query = new MongoDBQuery($filter);
+
+        $lendData = $this->mongoManager->executeQuery($this->collectionIdentifier, $query);
+
+        return (array) current($lendData->toArray());
+    }
+
     public function create(array $lend): array
     {
         $bulk = new MongoDBBulkWrite;

@@ -25,6 +25,8 @@ final class CreateLendService extends BaseLendService implements CreateLendServi
 
         $lend->setId(new ObjectId($createdLendArray['id']));
 
+        $this->itemRepository->setAsUnavailable($lendInsertArray['itemId']);
+
         return $lend;
     }
 }

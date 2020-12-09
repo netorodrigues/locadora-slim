@@ -9,6 +9,11 @@ final class DeleteLendService extends BaseLendService implements DeleteLendServi
 {
     public function execute(string $lendId): bool
     {
+        $lend = $this->lendRepository->getById($lendId);
+
+        $wasSetAvailable = $this->itemRepository
+            ->setAsAvailable($lend['itemId']);
+
         return $this->lendRepository->delete($lendId);
     }
 }
