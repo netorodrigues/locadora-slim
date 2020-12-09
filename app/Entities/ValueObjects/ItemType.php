@@ -2,7 +2,7 @@
 
 namespace App\Entities\ValueObjects;
 
-use App\Exceptions\ValueObjects\InvalidItemTypeException;
+use App\Exceptions\ValueObjects\InvalidItemTypeReceivedException;
 
 final class ItemType
 {
@@ -12,7 +12,7 @@ final class ItemType
     public function __construct(string $value)
     {
         if (!self::isValid($value)) {
-            throw InvalidItemTypeException::handle($value);
+            throw InvalidItemTypeReceivedException::handle($value);
         }
 
         $this->value = $value;

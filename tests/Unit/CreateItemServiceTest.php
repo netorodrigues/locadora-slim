@@ -4,6 +4,7 @@ declare (strict_types = 1);
 
 use App\Entities\ValueObjects\Contracts\UniqueIDInterface;
 use App\Entities\ValueObjects\ItemType;
+use App\Exceptions\ValueObjects\InvalidItemTypeReceivedException;
 use App\Factories\Contracts\ItemFactory;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
 use Tests\BaseTest;
@@ -25,7 +26,7 @@ class CreateItemServiceTest extends BaseTest
         );
     }
 
-    public function testCase()
+    public function testCreateItem()
     {
         $itemType = 'book';
         $itemName = 'some-book-name';
@@ -48,5 +49,21 @@ class CreateItemServiceTest extends BaseTest
         $this->assertEquals($itemName, $createdItem->getName());
         $this->assertEquals($itemType, $createdItem->getType()->getValue());
         $this->assertEquals($itemAvailable, $createdItem->getAvailable());
+    }
+
+    public function testCreateItemWithInvalidType()
+    {
+        $itemType = 'bolacha';
+        $itemName = 'some-bolacha-name';
+        $itemAvailable = true;
+
+        $this->expectException(InvalidItemTypeReceivedException::class);
+        $item = $this->itemFactory->fromArray(
+            array(
+                'name' => $itemName,
+                'type' => $itemType,
+                'available' => $itemAvailable,
+            )
+        );
     }
 }
