@@ -3,11 +3,14 @@
          colors="true"
          cacheResult="false"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.3/phpunit.xsd"
-         bootstrap="../vendor/autoload.php"
+         bootstrap="bootstrap.php"
         >
   <testsuites>
-        <testsuite name="Application Test Suite">
+        <testsuite name="Locadora Test Suite">
             <directory suffix="Test.php">.</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="ENV_TYPE" value="TEST" force="true" />
+    </php>
 </phpunit>
