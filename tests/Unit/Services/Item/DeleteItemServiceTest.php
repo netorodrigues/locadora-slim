@@ -2,6 +2,8 @@
 
 declare (strict_types = 1);
 
+namespace Tests\Unit\Services\Item;
+
 use App\Factories\Contracts\ItemFactory;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
 use App\Services\Item\Contracts\DeleteItemServiceInterface;
