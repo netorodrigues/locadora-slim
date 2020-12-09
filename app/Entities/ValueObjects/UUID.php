@@ -3,6 +3,7 @@
 namespace App\Entities\ValueObjects;
 
 use App\Entities\ValueObjects\Contracts\UniqueIDInterface;
+use App\Exceptions\ValueObjects\InvalidUniqueIdReceivedException;
 
 final class UUID implements UniqueIDInterface
 {
@@ -12,7 +13,7 @@ final class UUID implements UniqueIDInterface
     public function __construct(string $value)
     {
         if (!self::isValid($value)) {
-            return false;
+            throw InvalidUniqueIdReceivedException::handle($value);
         }
 
         $this->value = $value;

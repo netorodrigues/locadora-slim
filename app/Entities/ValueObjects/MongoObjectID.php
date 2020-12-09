@@ -3,6 +3,7 @@
 namespace App\Entities\ValueObjects;
 
 use App\Entities\ValueObjects\Contracts\UniqueIDInterface;
+use App\Exceptions\ValueObjects\InvalidUniqueIdReceivedException;
 use \MongoDB\BSON\ObjectId;
 
 final class MongoObjectID implements UniqueIDInterface
@@ -16,7 +17,7 @@ final class MongoObjectID implements UniqueIDInterface
             $value = (string) new ObjectId();
         }
         if (!self::isValid($value)) {
-            return false;
+            throw InvalidUniqueIdReceivedException::handle($value);
         }
 
         $this->value = $value;

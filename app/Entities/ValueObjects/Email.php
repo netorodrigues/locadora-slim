@@ -3,6 +3,7 @@
 namespace App\Entities\ValueObjects;
 
 use App\Entities\ValueObjects\Contracts\EmailInterface;
+use App\Exceptions\ValueObjects\InvalidEmailReceivedException;
 
 final class Email implements EmailInterface
 {
@@ -11,7 +12,7 @@ final class Email implements EmailInterface
     public function __construct(string $value)
     {
         if (!self::isValid($value)) {
-            return false;
+            throw InvalidEmailReceivedException::handle($value);
         }
 
         $this->value = $value;
