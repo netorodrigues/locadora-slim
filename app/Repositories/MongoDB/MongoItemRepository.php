@@ -116,6 +116,10 @@ final class MongoItemRepository implements ItemRepository
 
         $itemData = $this->mongoManager->executeQuery($this->collectionIdentifier, $query);
 
-        return (array) current($itemData->toArray());
+        $itemArray = (array) current($itemData->toArray());
+        $itemArray['id'] = $itemArray['_id'];
+
+        unset($itemArray['_id']);
+        return $itemArray;
     }
 }

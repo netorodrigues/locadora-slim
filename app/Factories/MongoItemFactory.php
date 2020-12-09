@@ -28,7 +28,7 @@ class MongoItemFactory implements ItemFactory
     {
         $item = new Item;
 
-        $item->setId(new MongoObjectID($data['_id']));
+        $item->setId(new MongoObjectID($data['id']));
         $item->setType(new ItemType($data['type']));
         $item->setName($data['name']);
         $item->setAvailable($data['available']);
