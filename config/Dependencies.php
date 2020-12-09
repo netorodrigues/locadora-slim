@@ -19,8 +19,10 @@ use App\Services\Item\DeleteItemService;
 use App\Services\Item\EditItemService;
 use App\Services\Item\GetItemsService;
 use App\Services\Lend\Contracts\CreateLendServiceInterface;
+use App\Services\Lend\Contracts\DeleteLendServiceInterface;
 use App\Services\Lend\Contracts\GetLendsServiceInterface;
 use App\Services\Lend\CreateLendService;
+use App\Services\Lend\DeleteLendService;
 use App\Services\Lend\GetLendsService;
 use function DI\autowire as useInstance;
 use Psr\Container\ContainerInterface;
@@ -65,6 +67,7 @@ $itemServices = [
 $lendServices = [
     CreateLendServiceInterface::class => useInstance(CreateLendService::class),
     GetLendsServiceInterface::class => useInstance(GetLendsService::class),
+    DeleteLendServiceInterface::class => useInstance(DeleteLendService::class),
 ];
 
 return array_merge(
