@@ -7,6 +7,7 @@ namespace Tests\Unit\Services\Lend;
 use App\Entities\ValueObjects\Contracts\EmailInterface;
 use App\Entities\ValueObjects\Contracts\UniqueIDInterface;
 use App\Exceptions\ItemDoesntExistsException;
+use App\Exceptions\ValueObjects\InvalidEmailReceivedException;
 
 final class CreateLendServiceTest extends BaseLendServiceTest
 {
@@ -46,6 +47,24 @@ final class CreateLendServiceTest extends BaseLendServiceTest
         $itemId = 'some-invalid-id';
 
         $this->expectException(ItemDoesntExistsException::class);
+        $lend = $this->lendFactory->fromArray(
+            array(
+                'responsibleName' => $lendName,
+                'responsibleEmail' => $lendEmail,
+                'itemId' => $itemId,
+            )
+        );
+
+    }
+
+    public function testCreateLendWithInvalidEmail()
+    {
+        $lendName = 'New Lend Responsible';
+        $lendEmail = 'some-invalid-email';
+        $item = $this->createItem();
+        $itemId = $item->getId()->getValue();
+
+        $this->expectException(InvalidEmailReceivedException::class);
         $lend = $this->lendFactory->fromArray(
             array(
                 'responsibleName' => $lendName,
