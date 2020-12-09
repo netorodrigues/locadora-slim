@@ -2,6 +2,8 @@
 
 namespace App\Entities\ValueObjects;
 
+use App\Exceptions\ValueObjects\InvalidItemTypeException;
+
 final class ItemType
 {
     public static $possibleValues = ['cd', 'dvd', 'book'];
@@ -10,7 +12,7 @@ final class ItemType
     public function __construct(string $value)
     {
         if (!self::isValid($value)) {
-            return false;
+            throw InvalidItemTypeException::handle($value);
         }
 
         $this->value = $value;
