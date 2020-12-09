@@ -8,26 +8,9 @@ use App\Entities\ValueObjects\Contracts\UniqueIDInterface;
 use App\Entities\ValueObjects\ItemType;
 use App\Exceptions\ValueObjects\InvalidItemTypeReceivedException;
 use App\Factories\Contracts\ItemFactory;
-use App\Services\Item\Contracts\CreateItemServiceInterface;
-use Tests\BaseTest;
 
-class CreateItemServiceTest extends BaseTest
+final class CreateItemServiceTest extends BaseItemServiceTest
 {
-    private $createItemService;
-    private $itemFactory;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->createItemService = $this->container->get(
-            CreateItemServiceInterface::class
-        );
-
-        $this->itemFactory = $this->container->get(
-            ItemFactory::class
-        );
-    }
-
     public function testCreateItem()
     {
         $itemType = 'book';
