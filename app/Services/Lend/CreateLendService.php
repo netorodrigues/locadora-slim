@@ -4,6 +4,8 @@ namespace App\Services\Lend;
 
 use App\Entities\Lend;
 use App\Entities\ValueObjects\MongoObjectID as ObjectId;
+use App\Exceptions\ItemDoesntExistsException;
+use App\Exceptions\ItemUnavailableException;
 use App\Services\Lend\Contracts\CreateLendServiceInterface;
 
 final class CreateLendService extends BaseLendService implements CreateLendServiceInterface
@@ -20,6 +22,17 @@ final class CreateLendService extends BaseLendService implements CreateLendServi
     public function execute(Lend $lend): Lend
     {
         $lendInsertArray = $this->generateLendInsertArray($lend);
+        $itemId = $lendInsertArray['itemId'];
+
+        $itemData = $this->itemRepository->getById($itemId);
+
+        if (empty($itemData)) {
+            throw ItemDoesntExistsException::handle($itemId);
+        }
+
+        if (!$itemData['available']) {
+            throw ItemUnavailableException::handle($itemId);
+        }
 
         $createdLendArray = $this->lendRepository->create($lendInsertArray);
 
