@@ -1,11 +1,8 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
-
 use App\Handlers\HttpErrorHandler;
 use App\Middlewares\JSONBodyParserMiddleware;
 use DI\Bridge\Slim\Bridge as SlimApp;
-use DI\ContainerBuilder;
 
 $rootDir = __DIR__ . '/../';
 
@@ -16,24 +13,23 @@ if (file_exists($envFile)) {
     $dotenv->load();
 }
 
-$dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DB_PORT']);
+$dotenv->required([
+    'ENV_TYPE',
+    'DB_HOST',
+    'DB_NAME',
+    'DB_USER',
+    'DB_PASS',
+    'DB_PORT',
+]);
 
-$settings = require __DIR__ . '/Settings.php';
-$dependencies = require __DIR__ . '/Dependencies.php';
-
-$containerBuilder = new ContainerBuilder();
-
-$containerBuilder->addDefinitions($settings);
-$containerBuilder->addDefinitions($dependencies);
-
-$container = $containerBuilder->build();
+$container = require __DIR__ . '/Container.php';
 
 $app = SlimApp::create($container);
 
 $callableResolver = $app->getCallableResolver();
 $responseFactory = $app->getResponseFactory();
 $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
-$errorMiddleware = $app->addErrorMiddleware(false, false, false);
+$errorMiddleware = $app->addErrorMiddleware(true, false, false);
 $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
 $app->add(new JSONBodyParserMiddleware());
