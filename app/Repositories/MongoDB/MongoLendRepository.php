@@ -69,11 +69,11 @@ final class MongoLendRepository implements LendRepository
         return $lend;
     }
 
-    public function delete(string $itemId): bool
+    public function delete(string $lendId): bool
     {
         $bulk = new MongoDBBulkWrite;
 
-        $bulk->delete(['_id' => $itemId]);
+        $bulk->delete(['_id' => $lendId]);
 
         $bulkWriteResult = $this->mongoManager->executeBulkWrite($this->collectionIdentifier, $bulk);
 
