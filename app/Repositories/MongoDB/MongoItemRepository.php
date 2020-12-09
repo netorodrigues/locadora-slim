@@ -32,7 +32,14 @@ final class MongoItemRepository implements ItemRepository
 
         $rows = $this->mongoManager->executeQuery($this->collectionIdentifier, $query);
 
-        return $rows->toArray();
+        $rowsArray = $rows->toArray();
+
+        foreach ($rowsArray as &$row) {
+            $row->id = $row->_id;
+            unset($row->_id);
+        }
+
+        return $rowsArray;
     }
 
     public function setAsAvailable(string $itemId): bool

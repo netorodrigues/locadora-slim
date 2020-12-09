@@ -11,11 +11,6 @@ final class GetItemsService extends BaseItemService implements GetItemsServiceIn
     {
         $rows = $this->itemRepository->getAvailable();
 
-        foreach ($rows as &$row) {
-            $row->id = $row->_id;
-            unset($row->_id);
-        }
-
         return $rows;
     }
 }
