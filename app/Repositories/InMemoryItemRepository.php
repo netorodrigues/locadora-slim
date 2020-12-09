@@ -78,9 +78,13 @@ final class InMemoryItemRepository implements ItemRepository
     public function getById(string $itemId): array
     {
 
-        $filteredItems = array_filter($this->table, function ($item) {
+        $filteredItems = array_filter($this->table, function ($item) use ($itemId) {
             return $item['id'] === $itemId;
         });
+
+        if (empty($filteredItems)) {
+            return [];
+        }
 
         $itemArray = current($filteredItems);
         return $itemArray;
