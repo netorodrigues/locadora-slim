@@ -2,7 +2,7 @@
 
 namespace App\Entities\ValueObjects;
 
-class ItemType
+final class ItemType
 {
     public static $possibleValues = ['cd', 'dvd', 'book'];
     private $value;

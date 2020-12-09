@@ -10,7 +10,7 @@ use App\Factories\Contracts\LendFactory;
 use App\Repositories\Contracts\ItemRepository;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class MongoLendFactory implements LendFactory
+final class MongoLendFactory implements LendFactory
 {
 
     private $itemFactory;

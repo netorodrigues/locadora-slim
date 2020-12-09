@@ -4,7 +4,7 @@ namespace App\Entities\ValueObjects;
 
 use App\Entities\ValueObjects\Contracts\EmailInterface;
 
-class Email implements EmailInterface
+final class Email implements EmailInterface
 {
     private $value;
 

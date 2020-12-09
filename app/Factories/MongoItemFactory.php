@@ -8,7 +8,7 @@ use App\Entities\ValueObjects\MongoObjectID;
 use App\Factories\Contracts\ItemFactory;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class MongoItemFactory implements ItemFactory
+final class MongoItemFactory implements ItemFactory
 {
 
     public function fromRequest(Request $request): Item
