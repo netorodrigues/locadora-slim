@@ -13,7 +13,7 @@ final class InvalidItemTypeReceivedException extends APIException
                 'Invalid item type informed: %s. possible types are: (%s)',
                 $type,
                 implode(',', ItemType::$possibleValues)
-            )
+            ), 400
         );
     }
 }
