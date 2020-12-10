@@ -4,6 +4,7 @@ declare (strict_types = 1);
 
 namespace Tests\Unit\Services\Item;
 
+use App\Exceptions\ItemDoesntExistsException;
 use App\Exceptions\ItemUnavailableException;
 use App\Repositories\Contracts\ItemRepository;
 use App\Services\Item\Contracts\DeleteItemServiceInterface;
@@ -38,9 +39,8 @@ final class DeleteItemServiceTest extends BaseItemServiceTest
     {
         $invalidId = 'some-invalid-id';
 
-        $wasDeleted = $this->deleteItemService->execute($invalidId);
-
-        $this->assertTrue($wasDeleted);
+        $this->expectException(ItemDoesntExistsException::class);
+        $this->deleteItemService->execute($invalidId);
     }
 
     public function testDeleteItemUnavailable()

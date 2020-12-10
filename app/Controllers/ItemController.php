@@ -43,7 +43,7 @@ final class ItemController extends JSONController
     {
         $baseItem = $this->itemFactory->fromRequest($request);
         $createdItem = $this->createItemService->execute($baseItem);
-        return $this->sendJson($response, $createdItem->toArray(), 200);
+        return $this->sendJson($response, $createdItem->toArray(), 201);
     }
 
     public function put(string $itemId, Request $request, Response $response): Response

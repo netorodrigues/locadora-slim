@@ -11,7 +11,7 @@ final class InvalidUniqueIdReceivedException extends APIException
             sprintf(
                 'Invalid unique id informed: %s',
                 $id,
-            )
+            ), 400
         );
     }
 }

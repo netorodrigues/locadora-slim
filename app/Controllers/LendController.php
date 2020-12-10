@@ -42,7 +42,7 @@ final class LendController extends JSONController
     {
         $lend = $this->lendFactory->fromRequest($request);
         $createdLend = $this->createLendService->execute($lend);
-        return $this->sendJson($response, $createdLend->toArray(), 200);
+        return $this->sendJson($response, $createdLend->toArray(), 201);
     }
 
     public function delete(string $itemId, Request $request, Response $response): Response
