@@ -77,6 +77,12 @@ abstract class BaseLendServiceTest extends BaseTest
         $this->lends = [];
     }
 
+    protected function markToRemove($lend)
+    {
+        $this->lends[] = $lend;
+        $this->items[] = $lend->getItem();
+    }
+
     protected function createItem()
     {
         $itemType = 'book';

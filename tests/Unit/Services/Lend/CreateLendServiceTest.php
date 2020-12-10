@@ -39,6 +39,8 @@ final class CreateLendServiceTest extends BaseLendServiceTest
             $itemId,
             $createdLend->getItem()->getId()->getValue()
         );
+
+        $this->markToRemove($createdLend);
     }
 
     public function testCreateLendWithInvalidItem()

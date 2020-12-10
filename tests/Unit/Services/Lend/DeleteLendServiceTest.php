@@ -17,7 +17,7 @@ final class DeleteServiceLendTest extends BaseLendServiceTest
         );
     }
 
-    public function testeDeleteLend()
+    public function testDeleteLend()
     {
         $lend = $this->createLend();
 
