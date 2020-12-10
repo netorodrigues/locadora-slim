@@ -1,9 +1,9 @@
 <?php
 namespace App\Exceptions\ValueObjects;
 
-use RuntimeException;
+use App\Exceptions\APIException;
 
-class InvalidEmailReceivedException extends RuntimeException
+final class InvalidEmailReceivedException extends APIException
 {
     public static function handle(string $email): self
     {

@@ -1,9 +1,9 @@
 <?php
 namespace App\Exceptions\ValueObjects;
 
-use RuntimeException;
+use App\Exceptions\APIException;
 
-class InvalidUniqueIdReceivedException extends RuntimeException
+final class InvalidUniqueIdReceivedException extends APIException
 {
     public static function handle(string $id): self
     {

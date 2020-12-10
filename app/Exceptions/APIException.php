@@ -1,7 +1,9 @@
 <?php
 namespace App\Exceptions;
 
-final class ItemDoesntExistsException extends APIException
+use RuntimeException;
+
+abstract class APIException extends RuntimeException
 {
     public static function handle(string $itemId): self
     {

@@ -2,9 +2,9 @@
 namespace App\Exceptions\ValueObjects;
 
 use App\Entities\ValueObjects\ItemType;
-use RuntimeException;
+use App\Exceptions\APIException;
 
-class InvalidItemTypeReceivedException extends RuntimeException
+final class InvalidItemTypeReceivedException extends APIException
 {
     public static function handle(string $type): self
     {

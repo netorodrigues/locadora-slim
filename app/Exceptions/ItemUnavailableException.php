@@ -1,9 +1,7 @@
 <?php
 namespace App\Exceptions;
 
-use RuntimeException;
-
-class ItemUnavailableException extends RuntimeException
+final class ItemUnavailableException extends APIException
 {
     public static function handle(string $itemId): self
     {
