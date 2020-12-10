@@ -21,27 +21,27 @@ final class DeleteItemServiceTest extends BaseItemServiceTest
         );
     }
 
-    // public function testDeleteItem()
-    // {
-    //     $item = $this->createItem();
-    //     $itemId = $item->getId()->getValue();
+    public function testDeleteItem()
+    {
+        $item = $this->createItem();
+        $itemId = $item->getId()->getValue();
 
-    //     $wasDeleted = $this->deleteItemService->execute(
-    //         $itemId
-    //     );
+        $wasDeleted = $this->deleteItemService->execute(
+            $itemId
+        );
 
-    //     $this->assertTrue($wasDeleted);
+        $this->assertTrue($wasDeleted);
 
-    // }
+    }
 
-    // public function testDeleteItemWithInvalidId()
-    // {
-    //     $invalidId = 'some-invalid-id';
+    public function testDeleteItemWithInvalidId()
+    {
+        $invalidId = 'some-invalid-id';
 
-    //     $wasDeleted = $this->deleteItemService->execute($invalidId);
+        $wasDeleted = $this->deleteItemService->execute($invalidId);
 
-    //     $this->assertTrue($wasDeleted);
-    // }
+        $this->assertTrue($wasDeleted);
+    }
 
     public function testDeleteItemUnavailable()
     {
