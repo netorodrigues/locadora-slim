@@ -29,4 +29,4 @@ COPY . /app
 WORKDIR /app
 
 # Install locadora dependencies
-RUN composer install --no-dev --no-interaction ;
+RUN composer install --no-interaction ;
