@@ -7,6 +7,7 @@ namespace Tests\Unit\Services\Lend;
 use App\Entities\ValueObjects\Contracts\EmailInterface;
 use App\Entities\ValueObjects\Contracts\UniqueIDInterface;
 use App\Exceptions\ItemDoesntExistsException;
+use App\Exceptions\ItemUnavailableException;
 use App\Exceptions\ValueObjects\InvalidEmailReceivedException;
 
 final class CreateLendServiceTest extends BaseLendServiceTest
@@ -72,6 +73,27 @@ final class CreateLendServiceTest extends BaseLendServiceTest
                 'itemId' => $itemId,
             )
         );
+
+    }
+
+    public function testCreateLendForUnavailableItem()
+    {
+        $lend = $this->createLend();
+
+        $responsibleName = 'some-other-guy';
+        $responsibleEmail = 'other.guy@email.com';
+        $itemId = $lend->getItem()->getId()->getValue();
+
+        $newLend = $this->lendFactory->fromArray(
+            array(
+                'responsibleName' => $responsibleName,
+                'responsibleEmail' => $responsibleEmail,
+                'itemId' => $itemId,
+            )
+        );
+
+        $this->expectException(ItemUnavailableException::class);
+        $this->createLendService->execute($newLend);
 
     }
 
