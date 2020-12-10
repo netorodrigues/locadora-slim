@@ -26,6 +26,22 @@ final class MongoItemRepository implements ItemRepository
         $this->mongoManager = $manager;
     }
 
+    public function get(): array
+    {
+        $query = new MongoDBQuery([]);
+
+        $rows = $this->mongoManager->executeQuery($this->collectionIdentifier, $query);
+
+        $rowsArray = $rows->toArray();
+
+        foreach ($rowsArray as &$row) {
+            $row->id = $row->_id;
+            unset($row->_id);
+        }
+
+        return $rowsArray;
+    }
+
     public function getAvailable(): array
     {
         $query = new MongoDBQuery(['available' => true]);

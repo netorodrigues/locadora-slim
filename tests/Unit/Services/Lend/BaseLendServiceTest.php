@@ -6,10 +6,10 @@ namespace Tests\Unit\Services\Lend;
 
 use App\Factories\Contracts\ItemFactory;
 use App\Factories\Contracts\LendFactory;
+use App\Repositories\Contracts\ItemRepository;
+use App\Repositories\Contracts\LendRepository;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
-use App\Services\Item\Contracts\DeleteItemServiceInterface;
 use App\Services\Lend\Contracts\CreateLendServiceInterface;
-use App\Services\Lend\Contracts\DeleteLendServiceInterface;
 use Tests\BaseTest;
 
 abstract class BaseLendServiceTest extends BaseTest
@@ -18,8 +18,6 @@ abstract class BaseLendServiceTest extends BaseTest
     protected $createLendService;
     protected $itemFactory;
     protected $lendFactory;
-    private $items = [];
-    private $lends = [];
 
     public function setUp(): void
     {
@@ -52,35 +50,30 @@ abstract class BaseLendServiceTest extends BaseTest
 
     private function clearItems()
     {
-        $deleteItemService = $this->container->get(
-            DeleteItemServiceInterface::class
+
+        $itemRepository = $this->container->get(
+            ItemRepository::class
         );
 
-        foreach ($this->items as $item) {
-            $itemId = $item->getId()->getValue();
-            $deleteItemService->execute($itemId);
+        $items = $itemRepository->get();
+
+        foreach ($items as $item) {
+            $itemRepository->delete($item['id']);
         }
 
-        $this->items = [];
     }
 
     private function clearLends()
     {
-        $deleteLendService = $this->container->get(
-            DeleteLendServiceInterface::class
+        $lendRepository = $this->container->get(
+            LendRepository::class
         );
-        foreach ($this->lends as $lend) {
-            $lendId = $lend->getId()->getValue();
-            $deleteLendService->execute($lendId);
+
+        $lends = $lendRepository->get();
+        foreach ($lends as $lend) {
+            $lendRepository->delete($lend['id']);
         }
 
-        $this->lends = [];
-    }
-
-    protected function markToRemove($lend)
-    {
-        $this->lends[] = $lend;
-        $this->items[] = $lend->getItem();
     }
 
     protected function createItem()
@@ -97,7 +90,6 @@ abstract class BaseLendServiceTest extends BaseTest
             )
         );
 
-        $this->items[] = $item;
         return $this->createItemService->execute($item);
     }
 
@@ -117,7 +109,6 @@ abstract class BaseLendServiceTest extends BaseTest
             )
         );
 
-        $this->lends[] = $lend;
         return $this->createLendService->execute($lend);
 
     }

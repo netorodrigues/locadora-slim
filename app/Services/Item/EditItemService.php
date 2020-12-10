@@ -27,7 +27,6 @@ final class EditItemService extends BaseItemService implements EditItemServiceIn
         if (empty($existingItem)) {
             throw ItemDoesntExistsException::handle($itemId);
         }
-
         $columnsArray = $this->generateUpdateArray($updatedItemData);
 
         $itemArrayData = $this->itemRepository->update($itemId, $columnsArray);

@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Entities\Item;
-use App\Entities\ValueObjects\MongoObjectID as ObjectId;
+use App\Entities\ValueObjects\MongoObjectID as ObjectID;
 use App\Repositories\Contracts\ItemRepository;
 
 final class InMemoryItemRepository implements ItemRepository
@@ -13,6 +13,11 @@ final class InMemoryItemRepository implements ItemRepository
     public function __construct()
     {
         $this->table = [];
+    }
+
+    public function get(): array
+    {
+        return $this->table;
     }
 
     public function getAvailable(): array
@@ -54,14 +59,24 @@ final class InMemoryItemRepository implements ItemRepository
 
     public function update(string $itemId, array $dataArray): array
     {
-        $itemPosition = array_search($itemId, array_column($this->table, 'id'));
+        $itemPosition = null;
+        foreach ($this->table as $position => $item) {
+            if ($itemId === $item['id']) {
+                $itemPosition = $position;
+                break;
+            }
+        }
 
-        $itemArray = &$this->table[$itemPosition];
+        if ($itemPosition === null) {
+            return [];
+        }
 
+        $itemArray = $this->table[$itemPosition];
         foreach ($dataArray as $key => $value) {
             $itemArray[$key] = $value;
         }
 
+        $this->table[$itemPosition] = $itemArray;
         return $itemArray;
     }
 
@@ -78,15 +93,13 @@ final class InMemoryItemRepository implements ItemRepository
     public function getById(string $itemId): array
     {
 
-        $filteredItems = array_filter($this->table, function ($item) use ($itemId) {
-            return $item['id'] === $itemId;
-        });
-
-        if (empty($filteredItems)) {
-            return [];
+        $itemArray = null;
+        foreach ($this->table as $item) {
+            if ($itemId === $item['id']) {
+                return $item;
+            }
         }
 
-        $itemArray = current($filteredItems);
-        return $itemArray;
+        return [];
     }
 }

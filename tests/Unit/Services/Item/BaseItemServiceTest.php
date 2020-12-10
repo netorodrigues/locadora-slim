@@ -5,8 +5,8 @@ declare (strict_types = 1);
 namespace Tests\Unit\Services\Item;
 
 use App\Factories\Contracts\ItemFactory;
+use App\Repositories\Contracts\ItemRepository;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
-use App\Services\Item\Contracts\DeleteItemServiceInterface;
 use Tests\BaseTest;
 
 abstract class BaseItemServiceTest extends BaseTest
@@ -31,17 +31,14 @@ abstract class BaseItemServiceTest extends BaseTest
     {
         parent::tearDown();
 
-        if (empty($this->items)) {
-            return;
-        }
-
-        $deleteService = $this->container->get(
-            DeleteItemServiceInterface::class
+        $itemRepository = $this->container->get(
+            ItemRepository::class
         );
 
-        foreach ($this->items as $item) {
-            $itemId = $item->getId()->getValue();
-            $deleteService->execute($itemId);
+        $items = $itemRepository->get();
+
+        foreach ($items as $item) {
+            $itemRepository->delete($item['id']);
         }
     }
 

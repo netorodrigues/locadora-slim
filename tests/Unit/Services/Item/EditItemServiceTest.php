@@ -32,7 +32,6 @@ final class EditItemServiceTest extends BaseItemServiceTest
             $itemId,
             ['name' => $otherBookName]
         );
-
         $this->assertInstanceOf(UniqueIDInterface::class, $editedItem->getId());
         $this->assertInstanceOf(ItemType::class, $editedItem->getType());
         $this->assertNotEmpty($editedItem->getId()->getValue());

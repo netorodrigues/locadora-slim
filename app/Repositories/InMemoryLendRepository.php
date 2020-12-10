@@ -21,15 +21,13 @@ final class InMemoryLendRepository implements LendRepository
 
     public function getById(string $lendId): array
     {
-        $filteredLends = array_filter($this->table, function ($lend) use ($lendId) {
-            return $lend['id'] === $lendId;
-        });
-        if (empty($filteredLends)) {
-            return [];
+        foreach ($this->table as $lend) {
+            if ($lendId === $lend['id']) {
+                return $lend;
+            }
         }
 
-        $lendArray = current($filteredLends);
-        return $lendArray;
+        return [];
     }
 
     public function create(array $lend): array

@@ -6,6 +6,7 @@ use App\Entities\Item;
 
 interface ItemRepository
 {
+    public function get(): array;
     public function getAvailable(): array;
     public function setAsAvailable(string $itemId): bool;
     public function setAsUnavailable(string $itemId): bool;
