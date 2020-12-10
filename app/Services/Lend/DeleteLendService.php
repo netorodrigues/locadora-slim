@@ -11,6 +11,10 @@ final class DeleteLendService extends BaseLendService implements DeleteLendServi
     {
         $lend = $this->lendRepository->getById($lendId);
 
+        if (empty($lend)) {
+            return true;
+        }
+
         $wasSetAvailable = $this->itemRepository
             ->setAsAvailable($lend['itemId']);
 

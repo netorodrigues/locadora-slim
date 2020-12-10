@@ -24,6 +24,9 @@ final class InMemoryLendRepository implements LendRepository
         $filteredLends = array_filter($this->table, function ($lend) use ($lendId) {
             return $lend['id'] === $lendId;
         });
+        if (empty($filteredLends)) {
+            return [];
+        }
 
         $lendArray = current($filteredLends);
         return $lendArray;
@@ -36,7 +39,6 @@ final class InMemoryLendRepository implements LendRepository
         $lend['id'] = $objectId->getValue();
 
         $this->table[] = $lend;
-
         return $lend;
     }
 

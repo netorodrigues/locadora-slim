@@ -45,10 +45,6 @@ abstract class BaseLendServiceTest extends BaseTest
     {
         parent::tearDown();
 
-        if (empty($this->items)) {
-            return;
-        }
-
         $this->clearLends();
         $this->clearItems();
 
