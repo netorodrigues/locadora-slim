@@ -73,7 +73,6 @@ abstract class BaseLendServiceTest extends BaseTest
         $deleteLendService = $this->container->get(
             DeleteLendServiceInterface::class
         );
-
         foreach ($this->lends as $lend) {
             $lendId = $lend->getId()->getValue();
             $deleteLendService->execute($lendId);
