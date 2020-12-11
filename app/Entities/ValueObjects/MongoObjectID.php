@@ -31,6 +31,6 @@ final class MongoObjectID implements UniqueIDInterface
 
     public static function isValid(string $id): bool
     {
-        return preg_match(self::MONGO_REGEX, $id);
+        return preg_match(self::MONGO_REGEX, $id) === 1;
     }
 }

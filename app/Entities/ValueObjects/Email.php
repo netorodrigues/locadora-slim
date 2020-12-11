@@ -26,6 +26,6 @@ final class Email implements EmailInterface
 
     public static function isValid(string $email): bool
     {
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
     }
 }
