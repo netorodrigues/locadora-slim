@@ -23,3 +23,11 @@ $app->group("/api/lend", function (RouteCollectorProxy $group) {
     $group->delete('/{id}', [LendController::class, 'delete']);
     $group->options('/{id}', [PreflightController::class, 'options']);
 });
+
+$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+    $responsePayload = json_encode(['error' => 'route not found']);
+    $response->getBody()->write($responsePayload);
+    return $response
+        ->withHeader('Content-Type', 'application/json')
+        ->withStatus(404);
+});
