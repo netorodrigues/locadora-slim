@@ -47,15 +47,15 @@ final class ItemController extends JSONController
         return $this->sendJson($response, $createdItem->toArray(), 201);
     }
 
-    public function put(string $itemId, Request $request, Response $response): Response
+    public function put(string $id, Request $request, Response $response): Response
     {
-        $item = $this->editItemService->execute($itemId, $request->getParsedBody());
+        $item = $this->editItemService->execute($id, $request->getParsedBody());
         return $this->sendJson($response, $item->toArray(), 200);
     }
 
-    public function delete(string $itemId, Request $request, Response $response): Response
+    public function delete(string $id, Request $request, Response $response): Response
     {
-        $wasDeleted = $this->deleteItemService->execute($itemId);
+        $wasDeleted = $this->deleteItemService->execute($id);
         return $this->sendJson($response, ['deleted' => $wasDeleted], 200);
     }
 }
