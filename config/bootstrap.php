@@ -2,7 +2,6 @@
 
 use App\Handlers\HttpErrorHandler;
 use App\Middlewares\CorsMiddleware;
-use App\Middlewares\JSONBodyParserMiddleware;
 use DI\Bridge\Slim\Bridge as SlimApp;
 
 $rootDir = __DIR__ . '/../';
@@ -33,7 +32,7 @@ $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
 $errorMiddleware = $app->addErrorMiddleware(true, false, false);
 $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
-$app->add(new JSONBodyParserMiddleware());
+$app->addBodyParsingMiddleware();
 $app->add(new CorsMiddleware());
 $app->addRoutingMiddleware();
 
