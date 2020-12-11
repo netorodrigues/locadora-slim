@@ -33,7 +33,6 @@ $errorMiddleware = $app->addErrorMiddleware(true, false, false);
 $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
 $app->add(new JSONBodyParserMiddleware());
-$app->add(new Tuupola\Middleware\CorsMiddleware);
 
 require __DIR__ . '/Routes.php';
 
