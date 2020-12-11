@@ -19,6 +19,7 @@ $app->group("/api/items", function (RouteCollectorProxy $group) {
 $app->group("/api/lend", function (RouteCollectorProxy $group) {
     $group->get('', [LendController::class, 'get']);
     $group->post('', [LendController::class, 'post']);
+    $group->options('', [PreflightController::class, 'options']);
     $group->delete('/{id}', [LendController::class, 'delete']);
     $group->options('/{id}', [PreflightController::class, 'options']);
 });
