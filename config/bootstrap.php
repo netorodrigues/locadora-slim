@@ -1,6 +1,7 @@
 <?php
 
 use App\Handlers\HttpErrorHandler;
+use App\Middlewares\CorsMiddleware;
 use App\Middlewares\JSONBodyParserMiddleware;
 use DI\Bridge\Slim\Bridge as SlimApp;
 
@@ -33,6 +34,8 @@ $errorMiddleware = $app->addErrorMiddleware(true, false, false);
 $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
 $app->add(new JSONBodyParserMiddleware());
+$app->add(new CorsMiddleware());
+$app->addRoutingMiddleware();
 
 require __DIR__ . '/Routes.php';
 
