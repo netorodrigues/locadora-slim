@@ -1,4 +1,6 @@
 <?php
+
+declare (strict_types = 1);
 namespace App\Exceptions\ValueObjects;
 
 use App\Entities\ValueObjects\ItemType;
