@@ -27,3 +27,7 @@ $ docker exec -ti api.locadora composer install
 # If you want, run the tests
 $ docker exec -ti api.locadora composer test
 ```
+
+If you want, download and open [this simple screen](https://github.com/netorodrigues/locadora-slim-frontend) to interact with locadora-slim 
+
+
