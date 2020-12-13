@@ -1,6 +1,5 @@
 <?php
 
-use App\Handlers\HttpErrorHandler;
 use App\Middlewares\CorsMiddleware;
 use DI\Bridge\Slim\Bridge as SlimApp;
 
@@ -25,12 +24,6 @@ $dotenv->required([
 $container = require __DIR__ . '/Container.php';
 
 $app = SlimApp::create($container);
-
-$callableResolver = $app->getCallableResolver();
-$responseFactory = $app->getResponseFactory();
-$errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
-$errorMiddleware = $app->addErrorMiddleware(true, false, false);
-$errorMiddleware->setDefaultErrorHandler($errorHandler);
 
 $app->addBodyParsingMiddleware();
 $app->add(new CorsMiddleware());
