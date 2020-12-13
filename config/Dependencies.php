@@ -4,8 +4,8 @@ declare (strict_types = 1);
 
 use App\Factories\Contracts\ItemFactoryInterface;
 use App\Factories\Contracts\LendFactoryInterface;
-use App\Factories\MongoItemFactory;
-use App\Factories\MongoLendFactory;
+use App\Factories\ItemFactory;
+use App\Factories\LendFactory;
 use App\Repositories\Contracts\ItemRepository;
 use App\Repositories\Contracts\LendRepository;
 use App\Repositories\InMemoryItemRepository;
@@ -52,8 +52,8 @@ $connection = [
 ];
 
 $factories = [
-    ItemFactoryInterface::class => useInstance(MongoItemFactory::class),
-    LendFactoryInterface::class => useInstance(MongoLendFactory::class),
+    ItemFactoryInterface::class => useInstance(ItemFactory::class),
+    LendFactoryInterface::class => useInstance(LendFactory::class),
 ];
 
 $repositories = [

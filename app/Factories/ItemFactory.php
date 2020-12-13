@@ -9,7 +9,7 @@ use App\Entities\ValueObjects\MongoObjectID;
 use App\Factories\Contracts\ItemFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class MongoItemFactory implements ItemFactoryInterface
+final class ItemFactory implements ItemFactoryInterface
 {
 
     public function fromRequest(Request $request): Item

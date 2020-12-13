@@ -12,7 +12,7 @@ use App\Factories\Contracts\LendFactoryInterface;
 use App\Repositories\Contracts\ItemRepository;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class MongoLendFactory implements LendFactoryInterface
+final class LendFactory implements LendFactoryInterface
 {
 
     private $itemFactory;
