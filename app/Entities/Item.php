@@ -9,7 +9,7 @@ use App\Entities\ValueObjects\ItemType;
 
 final class Item implements Entity
 {
-    public static $editableColumns = ['type', 'name', 'available'];
+    public static $editableColumns = ['type', 'name'];
     private $id;
     private $type;
     private $name;
@@ -25,7 +25,7 @@ final class Item implements Entity
         $this->id = $id;
     }
 
-    public function getType(): ItemType
+    public function getType(): ?ItemType
     {
         return $this->type;
     }
@@ -35,7 +35,7 @@ final class Item implements Entity
         $this->type = $type;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -45,7 +45,7 @@ final class Item implements Entity
         $this->name = $name;
     }
 
-    public function getAvailable(): bool
+    public function getAvailable(): ?bool
     {
         return $this->available;
     }
@@ -57,11 +57,19 @@ final class Item implements Entity
 
     public function toArray(): array
     {
-        $itemAsArray = array(
-            'type' => $this->getType()->getValue(),
-            'name' => $this->getName(),
-            'available' => $this->getAvailable(),
-        );
+        $itemAsArray = array();
+
+        if ($this->getType()) {
+            $itemAsArray['type'] = $this->getType()->getValue();
+        }
+
+        if ($this->getName()) {
+            $itemAsArray['name'] = $this->getName();
+        }
+
+        if ($this->getAvailable()) {
+            $itemAsArray['available'] = $this->getAvailable();
+        }
 
         if ($this->getId()) {
             $itemAsArray['id'] = $this->getId()->getValue();
