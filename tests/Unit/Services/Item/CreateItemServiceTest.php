@@ -7,7 +7,6 @@ namespace Tests\Unit\Services\Item;
 use App\Entities\ValueObjects\Contracts\UniqueIDInterface;
 use App\Entities\ValueObjects\ItemType;
 use App\Exceptions\ValueObjects\InvalidItemTypeReceivedException;
-use App\Factories\Contracts\ItemFactory;
 
 final class CreateItemServiceTest extends BaseItemServiceTest
 {

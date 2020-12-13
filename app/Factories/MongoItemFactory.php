@@ -6,10 +6,10 @@ namespace App\Factories;
 use App\Entities\Item;
 use App\Entities\ValueObjects\ItemType;
 use App\Entities\ValueObjects\MongoObjectID;
-use App\Factories\Contracts\ItemFactory;
+use App\Factories\Contracts\ItemFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class MongoItemFactory implements ItemFactory
+final class MongoItemFactory implements ItemFactoryInterface
 {
 
     public function fromRequest(Request $request): Item

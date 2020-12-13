@@ -4,7 +4,7 @@ declare (strict_types = 1);
 
 namespace Tests\Unit\Services\Item;
 
-use App\Factories\Contracts\ItemFactory;
+use App\Factories\Contracts\ItemFactoryInterface;
 use App\Repositories\Contracts\ItemRepository;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
 use Tests\BaseTest;
@@ -23,7 +23,7 @@ abstract class BaseItemServiceTest extends BaseTest
         );
 
         $this->itemFactory = $this->container->get(
-            ItemFactory::class
+            ItemFactoryInterface::class
         );
     }
 

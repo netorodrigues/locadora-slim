@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-use App\Factories\Contracts\ItemFactory;
+use App\Factories\Contracts\ItemFactoryInterface;
 use App\Factories\Contracts\LendFactory;
 use App\Factories\MongoItemFactory;
 use App\Factories\MongoLendFactory;
@@ -52,7 +52,7 @@ $connection = [
 ];
 
 $factories = [
-    ItemFactory::class => useInstance(MongoItemFactory::class),
+    ItemFactoryInterface::class => useInstance(MongoItemFactory::class),
     LendFactory::class => useInstance(MongoLendFactory::class),
 ];
 

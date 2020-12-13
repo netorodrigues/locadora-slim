@@ -3,7 +3,7 @@
 declare (strict_types = 1);
 namespace App\Controllers;
 
-use App\Factories\Contracts\ItemFactory;
+use App\Factories\Contracts\ItemFactoryInterface;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
 use App\Services\Item\Contracts\DeleteItemServiceInterface;
 use App\Services\Item\Contracts\EditItemServiceInterface;
@@ -24,7 +24,7 @@ final class ItemController extends JSONController
         GetItemsServiceInterface $getItemService,
         EditItemServiceInterface $editItemService,
         DeleteItemServiceInterface $deleteItemService,
-        ItemFactory $factory
+        ItemFactoryInterface $factory
     ) {
         $this->itemFactory = $factory;
 

@@ -7,7 +7,7 @@ use App\Entities\Lend;
 use App\Entities\ValueObjects\Email;
 use App\Entities\ValueObjects\MongoObjectID as ObjectId;
 use App\Exceptions\ItemDoesntExistsException;
-use App\Factories\Contracts\ItemFactory;
+use App\Factories\Contracts\ItemFactoryInterface;
 use App\Factories\Contracts\LendFactory;
 use App\Repositories\Contracts\ItemRepository;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -17,7 +17,7 @@ final class MongoLendFactory implements LendFactory
 
     private $itemFactory;
     private $itemRepository;
-    public function __construct(ItemFactory $itemFactory, ItemRepository $itemRepository)
+    public function __construct(ItemFactoryInterface $itemFactory, ItemRepository $itemRepository)
     {
         $this->itemFactory = $itemFactory;
         $this->itemRepository = $itemRepository;
