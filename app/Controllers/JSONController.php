@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 abstract class JSONController
 {
 
-    public function sendJson(Response $response,
+    private function json(Response $response,
         array $responseContent,
         int $status): Response {
 
@@ -19,4 +19,35 @@ abstract class JSONController
             ->withHeader('Content-Type', 'application/json')
             ->withStatus($status);
     }
+
+    public function responseOk(Response $response, array $responseContent)
+    {
+        return $this->json($response, $responseContent, 200);
+    }
+
+    public function responseCreated(Response $response, array $responseContent)
+    {
+        return $this->json($response, $responseContent, 201);
+    }
+
+    public function responseBadRequest(Response $response, array $responseContent)
+    {
+        return $this->json($response, ['error' => $responseContent], 400);
+    }
+
+    public function responseForbidden(Response $response, array $responseContent)
+    {
+        return $this->json($response, ['error' => $responseContent], 403);
+    }
+
+    public function responseNotAcceptable(Response $response, array $responseContent)
+    {
+        return $this->json($response, ['error' => $responseContent], 406);
+    }
+
+    public function responseInternalServerError(Response $response, array $responseContent)
+    {
+        return $this->json($response, ['error' => $responseContent], 500);
+    }
+
 }
