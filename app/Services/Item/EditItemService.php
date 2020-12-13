@@ -21,14 +21,17 @@ final class EditItemService extends BaseItemService implements EditItemServiceIn
 
         return $columnsArray;
     }
-    public function execute(string $itemId, array $updatedItemData): Item
+    public function execute(string $itemId, array $requestData): Item
     {
         $existingItem = $this->itemRepository->getById($itemId);
 
         if (empty($existingItem)) {
             throw ItemDoesntExistsException::handle($itemId);
         }
-        $columnsArray = $this->generateUpdateArray($updatedItemData);
+
+        $updatedItemData = $this->itemFactory->fromArray($requestData);
+
+        $columnsArray = $this->generateUpdateArray($updatedItemData->toArray());
 
         $itemArrayData = $this->itemRepository->update($itemId, $columnsArray);
 
