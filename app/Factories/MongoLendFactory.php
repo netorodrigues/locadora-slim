@@ -8,11 +8,11 @@ use App\Entities\ValueObjects\Email;
 use App\Entities\ValueObjects\MongoObjectID as ObjectId;
 use App\Exceptions\ItemDoesntExistsException;
 use App\Factories\Contracts\ItemFactoryInterface;
-use App\Factories\Contracts\LendFactory;
+use App\Factories\Contracts\LendFactoryInterface;
 use App\Repositories\Contracts\ItemRepository;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-final class MongoLendFactory implements LendFactory
+final class MongoLendFactory implements LendFactoryInterface
 {
 
     private $itemFactory;

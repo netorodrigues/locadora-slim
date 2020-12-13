@@ -3,7 +3,7 @@
 declare (strict_types = 1);
 namespace App\Controllers;
 
-use App\Factories\Contracts\LendFactory;
+use App\Factories\Contracts\LendFactoryInterface;
 use App\Services\Lend\Contracts\CreateLendServiceInterface;
 use App\Services\Lend\Contracts\DeleteLendServiceInterface;
 use App\Services\Lend\Contracts\GetLendsServiceInterface;
@@ -23,7 +23,7 @@ final class LendController extends JSONController
         CreateLendServiceInterface $createLendService,
         GetLendsServiceInterface $getLendService,
         DeleteLendServiceInterface $deleteLendService,
-        LendFactory $lendFactory
+        LendFactoryInterface $lendFactory
 
     ) {
         $this->createLendService = $createLendService;

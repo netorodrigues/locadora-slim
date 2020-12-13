@@ -6,7 +6,7 @@ namespace App\Factories\Contracts;
 use App\Entities\Lend;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-interface LendFactory
+interface LendFactoryInterface
 {
     public function fromRequest(Request $request): Lend;
     public function fromArray(array $lendData): Lend;

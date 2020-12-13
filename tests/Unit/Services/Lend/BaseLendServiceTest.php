@@ -5,7 +5,7 @@ declare (strict_types = 1);
 namespace Tests\Unit\Services\Lend;
 
 use App\Factories\Contracts\ItemFactoryInterface;
-use App\Factories\Contracts\LendFactory;
+use App\Factories\Contracts\LendFactoryInterface;
 use App\Repositories\Contracts\ItemRepository;
 use App\Repositories\Contracts\LendRepository;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
@@ -35,7 +35,7 @@ abstract class BaseLendServiceTest extends BaseTest
         );
 
         $this->lendFactory = $this->container->get(
-            LendFactory::class
+            LendFactoryInterface::class
         );
     }
 

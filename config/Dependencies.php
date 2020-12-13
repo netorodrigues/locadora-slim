@@ -3,7 +3,7 @@
 declare (strict_types = 1);
 
 use App\Factories\Contracts\ItemFactoryInterface;
-use App\Factories\Contracts\LendFactory;
+use App\Factories\Contracts\LendFactoryInterface;
 use App\Factories\MongoItemFactory;
 use App\Factories\MongoLendFactory;
 use App\Repositories\Contracts\ItemRepository;
@@ -53,7 +53,7 @@ $connection = [
 
 $factories = [
     ItemFactoryInterface::class => useInstance(MongoItemFactory::class),
-    LendFactory::class => useInstance(MongoLendFactory::class),
+    LendFactoryInterface::class => useInstance(MongoLendFactory::class),
 ];
 
 $repositories = [
