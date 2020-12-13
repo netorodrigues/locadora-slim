@@ -35,6 +35,10 @@ final class LendFactory implements LendFactoryInterface
             $requestBody['itemId']
         );
 
+        if (empty($itemData)) {
+            throw ItemDoesntExistsException::handle($requestBody['itemId']);
+        }
+
         $item = $this->itemFactory->fromArray($itemData);
         $lend->setItem($item);
 
