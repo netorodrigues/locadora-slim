@@ -3,6 +3,9 @@
 declare (strict_types = 1);
 namespace App\Controllers;
 
+use App\Exceptions\ItemDoesntExistsException;
+use App\Exceptions\ItemUnavailableException;
+use App\Exceptions\ValueObjects\InvalidEmailReceivedException;
 use App\Factories\Contracts\LendFactoryInterface;
 use App\Services\Lend\Contracts\CreateLendServiceInterface;
 use App\Services\Lend\Contracts\DeleteLendServiceInterface;
