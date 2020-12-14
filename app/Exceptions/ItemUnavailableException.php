@@ -11,7 +11,7 @@ final class ItemUnavailableException extends APIException
             sprintf(
                 'Trying to use unavailable item with id: %s',
                 $itemId,
-            ), 403
+            )
         );
     }
 }

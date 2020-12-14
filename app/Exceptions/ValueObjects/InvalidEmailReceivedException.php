@@ -13,7 +13,7 @@ final class InvalidEmailReceivedException extends APIException
             sprintf(
                 'Invalid email informed: %s',
                 $email,
-            ), 400
+            )
         );
     }
 }

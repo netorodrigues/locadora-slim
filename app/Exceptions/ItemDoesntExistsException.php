@@ -11,7 +11,7 @@ final class ItemDoesntExistsException extends APIException
             sprintf(
                 'Trying to use non-existing item with id: %s',
                 $itemId,
-            ), 406
+            )
         );
     }
 }
