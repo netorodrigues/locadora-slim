@@ -7,6 +7,7 @@ use App\Entities\Lend;
 use App\Entities\ValueObjects\Email;
 use App\Entities\ValueObjects\MongoObjectID as ObjectId;
 use App\Exceptions\ItemDoesntExistsException;
+use App\Exceptions\MissingKeysInRequestException;
 use App\Factories\Contracts\ItemFactoryInterface;
 use App\Factories\Contracts\LendFactoryInterface;
 use App\Repositories\Contracts\ItemRepository;
@@ -23,9 +24,14 @@ final class LendFactory implements LendFactoryInterface
         $this->itemRepository = $itemRepository;
     }
 
-    public function fromRequest(Request $request): Lend
+    public function fromRequest(Request $request, array $requiredKeys): Lend
     {
         $requestBody = $request->getParsedBody();
+        $missingKeys = array_diff($requiredKeys, array_keys($requestBody));
+
+        if (!empty($missingKeys)) {
+            throw MissingKeysInRequestException::handle($missingKeys, $requiredKeys);
+        }
 
         $lend = new Lend;
         $lend->setResponsibleEmail(new Email($requestBody['responsibleEmail']));

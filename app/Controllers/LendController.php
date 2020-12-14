@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use App\Exceptions\ItemDoesntExistsException;
 use App\Exceptions\ItemUnavailableException;
+use App\Exceptions\MissingKeysInRequestException;
 use App\Exceptions\ValueObjects\InvalidEmailReceivedException;
 use App\Factories\Contracts\LendFactoryInterface;
 use App\Services\Lend\Contracts\CreateLendServiceInterface;
@@ -22,6 +23,8 @@ final class LendController extends JSONController
     private $deleteLendService;
 
     private $lendFactory;
+
+    private const POST_REQUIRED_KEYS = ['responsibleName', 'responsibleEmail', 'itemId'];
 
     public function __construct(
         CreateLendServiceInterface $createLendService,
@@ -53,7 +56,7 @@ final class LendController extends JSONController
     {
 
         try {
-            $lend = $this->lendFactory->fromRequest($request);
+            $lend = $this->lendFactory->fromRequest($request, self::POST_REQUIRED_KEYS);
             $createdLend = $this->createLendService->execute($lend);
 
             return $this->responseCreated($response, $createdLend->toArray());
@@ -61,6 +64,8 @@ final class LendController extends JSONController
             return $this->responseForbidden($response, [$e->getMessage()]);
         } catch (ItemDoesntExistsException $e) {
             return $this->responseNotAcceptable($response, [$e->getMessage()]);
+        } catch (MissingKeysInRequestException $e) {
+            return $this->responseBadRequest($response, [$e->getMessage()]);
         } catch (InvalidEmailReceivedException $e) {
             return $this->responseBadRequest($response, [$e->getMessage()]);
         } catch (Throwable $e) {
