@@ -5,6 +5,7 @@ namespace App\Controllers;
 
 use App\Exceptions\ItemDoesntExistsException;
 use App\Exceptions\ItemUnavailableException;
+use App\Exceptions\MissingKeysInRequestException;
 use App\Exceptions\ValueObjects\InvalidItemTypeReceivedException;
 use App\Factories\Contracts\ItemFactoryInterface;
 use App\Services\Item\Contracts\CreateItemServiceInterface;
@@ -22,6 +23,8 @@ final class ItemController extends JSONController
     private $createItemService;
     private $getItemService;
     private $deleteItemService;
+
+    private const POST_REQUIRED_KEYS = ['type', 'name'];
 
     public function __construct(
         CreateItemServiceInterface $createItemService,
@@ -52,14 +55,15 @@ final class ItemController extends JSONController
 
     public function post(Request $request, Response $response): Response
     {
-
         try {
 
-            $baseItem = $this->itemFactory->fromRequest($request);
+            $baseItem = $this->itemFactory->fromRequest($request, self::POST_REQUIRED_KEYS);
             $createdItem = $this->createItemService->execute($baseItem);
 
             return $this->responseCreated($response, $createdItem->toArray());
         } catch (InvalidItemTypeReceivedException $e) {
+            return $this->responseBadRequest($response, [$e->getMessage()]);
+        } catch (MissingKeysInRequestException $e) {
             return $this->responseBadRequest($response, [$e->getMessage()]);
         } catch (Throwable $e) {
             return $this->responseInternalServerError($response, [$e->getMessage()]);

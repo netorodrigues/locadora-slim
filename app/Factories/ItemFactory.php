@@ -6,15 +6,22 @@ namespace App\Factories;
 use App\Entities\Item;
 use App\Entities\ValueObjects\ItemType;
 use App\Entities\ValueObjects\MongoObjectID;
+use App\Exceptions\MissingKeysInRequestException;
 use App\Factories\Contracts\ItemFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 final class ItemFactory implements ItemFactoryInterface
 {
 
-    public function fromRequest(Request $request): Item
+    public function fromRequest(Request $request, array $requiredKeys): Item
     {
         $requestBody = $request->getParsedBody();
+
+        $missingKeys = array_diff($requiredKeys, array_keys($requestBody));
+
+        if (!empty($missingKeys)) {
+            throw MissingKeysInRequestException::handle($missingKeys, $requiredKeys);
+        }
 
         $item = new Item;
         $item->setType(new ItemType($requestBody['type']));

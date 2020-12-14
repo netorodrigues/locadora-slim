@@ -8,6 +8,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 interface ItemFactoryInterface
 {
-    public function fromRequest(Request $request): Item;
+    public function fromRequest(Request $request, array $requiredKeys): Item;
     public function fromArray(array $data): Item;
 }
