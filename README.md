@@ -31,3 +31,6 @@ $ docker exec -ti api.locadora composer test
 If you want, download and open [this simple screen](https://github.com/netorodrigues/locadora-slim-frontend) to interact with locadora-slim 
 
 
+![](img/mulan-success.gif)
+
+
